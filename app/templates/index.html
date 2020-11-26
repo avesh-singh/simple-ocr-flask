@@ -1,12 +1,60 @@
-<html>
-    <head>
-        <title>Pan Card OCR</title>
-    </head>
-    <body>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pan Card OCR</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" 
+    integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+</head>
+<body>
+    <h1 class="container">PAN Card Optical Character Recognition</h1>
+    <br>
+    <div class="container">
+        {% with messages = get_flashed_messages() %}
+        {% if messages %}
+        <ul>
+            {% for message in messages %}
+            <li style="color: green;">{{ message }}</li>
+            {% endfor %}
+        </ul>
+        {% endif %}
+        {% endwith %}
+    </div>
+    <div class="container">
+    <form method="POST" action="" >
+        <div>
+            <div class="row">
+                <p class="form-group col-lg">
+                    {{ form.name.label }}<br>
+                    {{ form.name(class_="form-control") }}
+                </p>
+            </div>
+            
+            <div class="row">
+                <p class="form-group col-lg">
+                    {{ form.dob.label }}<br>
+                    {{ form.dob(class_="form-control") }}
+                </p>
+            </div>
+            
+            <div class="row">
+                <p class="form-group col-lg">
+                    {{ form.pan.label }}<br>
+                    {{ form.pan(size=10, class_="form-control") }}
+                </p>
+            </div>
+            
+        </div>
+        
+    </form>
+    </div>
+    <div class="container">
         <h1>Upload</h1>
         <form method="POST" action="" enctype="multipart/form-data">
-            <p><input type="file" name="image" accept="image/*"/></p>
-            <p><input type="submit" value="Submit"></p>
-        </form>
-    </body>
+        <p><input type="file" name="image" accept="image/*" class="form-control"/></p>
+        <p><input type="submit" value="Submit" class="btn btn-primary"></p>
+    </form>
+    </div>
+</body>
 </html>

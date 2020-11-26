@@ -1,9 +1,9 @@
 from flask_wtf import FlaskForm
-from wtforms import SubmitField
+from wtforms import SubmitField, TextField, DateField
 from flask_wtf.file import FileField,FileRequired, FileAllowed
-# from wtforms.validators import 
 
 
-class UploadForm(FlaskForm):
-    image = FileField('Pan Card')
-    submit = SubmitField('Upload')
+class DetailsForm(FlaskForm):
+    name = TextField('Name')
+    dob = DateField('Date of Birth')
+    pan = TextField('Permanent Account Number')
