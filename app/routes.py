@@ -26,7 +26,6 @@ def upload():
             print(validate_image(uploaded.stream))
             return "Invalid image", 400
         try:
-            uploaded.save(os.path.join(app.config['UPLOAD_PATH'], filename))
             return read_fields(uploaded, file_ext)
         except AssertionError as e:
             return "not able to identify, {}".format(e), 400
