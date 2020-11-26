@@ -54,10 +54,10 @@ class PANImage(object):
         '''
         self.check_()
         
-        it_dept = re.compile(r'INCOME TAX DEPARTMENT')
+        it_dept = re.compile(r'INCOME\s?TAX\s?DEPARTMENT')
         pan_label = re.compile(r"Permanent Account Number( Card)?", flags=re.IGNORECASE)
         signature_label = re.compile(r'Signature', flags=re.IGNORECASE)
-        govt_label = re.compile(r'GOVT(\.)? OF INDIA', flags=re.IGNORECASE)
+        govt_label = re.compile(r'GOVT(\.)?\s?OF\s?INDIA', flags=re.IGNORECASE)
         
         # newer PAN cards have Father's Name also
         name_label = re.compile(r"[^Father]+Name")
@@ -66,8 +66,8 @@ class PANImage(object):
         clean_overlay = []
         for line in self.overlay:
             text = line['LineText']
-            if not re.match(it_dept, text) and not re.match(pan_label, text) \
-                and not re.search(signature_label, text) and not re.match(govt_label, text):
+            if not re.search(it_dept, text) and not re.match(pan_label, text) \
+                and not re.search(signature_label, text) and not re.search(govt_label, text):
                 clean_overlay.append(line)
         i = 0
         while i < len(clean_overlay):
@@ -85,7 +85,7 @@ class PANImage(object):
     def extract_fields(self, list_overlay):
         self.check_()
         
-        dob_pattern = re.compile(r'\d{1,2}/\d{1,2}/\d{4}')
+        dob_pattern = re.compile(r'([0-9 ]+)/([0-9 ]+)/([0-9 ]+)')
         pan_pattern = re.compile(r'[A-Z0-9]{10}')
         name_pattern = re.compile(r'[A-Z .]+')
         
@@ -94,7 +94,7 @@ class PANImage(object):
             text = entity['LineText']
             
             if re.fullmatch(dob_pattern, text):
-                self.dob = text
+                self.dob = text.replace(' ','')
                 self.dob_box = entity['Words']
             
             elif re.fullmatch(pan_pattern, text):
@@ -114,6 +114,7 @@ class PANImage(object):
     
     def extract(self):
         clean_overlay = self.remove_unwanted_from_overlay()
+        print(clean_overlay)
         self.extract_fields(clean_overlay)
         dob = self.dob.split('/')
         dob_keys = ['day', 'month', 'year']
