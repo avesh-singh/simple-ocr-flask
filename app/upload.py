@@ -1,9 +1,10 @@
 from flask_wtf import FlaskForm
-from wtforms import SubmitField, TextField, DateField
+from wtforms import SubmitField, StringField, DateField
 from flask_wtf.file import FileField,FileRequired, FileAllowed
 
 
 class DetailsForm(FlaskForm):
-    name = TextField('Name')
+    name = StringField('Name')
+    father = StringField("Father's Name")
     dob = DateField('Date of Birth')
-    pan = TextField('Permanent Account Number')
+    pan = StringField('Permanent Account Number')

@@ -24,6 +24,7 @@ def upload():
                 form.dob.data = fields['dob']['text']
                 form.pan.data = fields['pan']['text']
                 form.name.data = fields['name']['text']
+                form.father.data = fields['father']['text']
                 return render_template('index.html', form=form)
             except AssertionError as e:
                 return "not able to identify, {}".format(e), 400
